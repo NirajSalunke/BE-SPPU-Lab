@@ -1,0 +1,49 @@
+{
+  "_format": "hh3-sol-build-info-1",
+  "id": "solc-0_8_34-37bbc06af15f2ce06712a10243c6d5fe9f226f92",
+  "solcVersion": "0.8.34",
+  "solcLongVersion": "0.8.34+commit.80d5c536",
+  "compilerType": "solc",
+  "toolVersions": {
+    "hardhat": "3.20.0"
+  },
+  "userSourceNameMap": {
+    "contracts/CharityDonation.sol": "project/contracts/CharityDonation.sol"
+  },
+  "input": {
+    "language": "Solidity",
+    "settings": {
+      "evmVersion": "osaka",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "": [
+            "ast"
+          ],
+          "*": [
+            "abi",
+            "evm.bytecode.linkReferences",
+            "evm.bytecode.object",
+            "evm.bytecode.opcodes",
+            "evm.bytecode.sourceMap",
+            "evm.deployedBytecode.immutableReferences",
+            "evm.deployedBytecode.linkReferences",
+            "evm.deployedBytecode.object",
+            "evm.deployedBytecode.opcodes",
+            "evm.deployedBytecode.sourceMap",
+            "evm.methodIdentifiers"
+          ]
+        }
+      },
+      "remappings": []
+    },
+    "sources": {
+      "project/contracts/CharityDonation.sol": {
+        "content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.28;\r\n\r\ncontract CharityDonation {\r\n    address public owner;\r\n    string public campaignName = \"GiveChain Community Relief Fund\";\r\n\r\n    uint256 public totalDonated;\r\n\r\n    mapping(address => uint256) public donations;\r\n\r\n    event DonationReceived(\r\n        address indexed donor,\r\n        uint256 amount,\r\n        uint256 timestamp\r\n    );\r\n\r\n    event FundsWithdrawn(\r\n        address indexed recipient,\r\n        uint256 amount,\r\n        uint256 timestamp\r\n    );\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n    }\r\n\r\n    modifier onlyOwner() {\r\n        require(msg.sender == owner, \"Only the owner can do this\");\r\n        _;\r\n    }\r\n\r\n    function donate() external payable {\r\n        require(msg.value > 0, \"Donation must be greater than zero\");\r\n\r\n        donations[msg.sender] += msg.value;\r\n        totalDonated += msg.value;\r\n\r\n        emit DonationReceived(msg.sender, msg.value, block.timestamp);\r\n    }\r\n\r\n    function withdraw() external onlyOwner {\r\n        uint256 amount = address(this).balance;\r\n        require(amount > 0, \"No funds to withdraw\");\r\n\r\n        (bool success, ) = payable(owner).call{value: amount}(\"\");\r\n        require(success, \"Withdrawal failed\");\r\n\r\n        emit FundsWithdrawn(owner, amount, block.timestamp);\r\n    }\r\n\r\n    function getBalance() external view returns (uint256) {\r\n        return address(this).balance;\r\n    }\r\n}\r\n"
+      }
+    }
+  }
+}

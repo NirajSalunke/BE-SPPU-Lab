@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F8F5F0;
+  --foreground: #1A1A2E;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+
+  /* GiveChain palette */
+  --color-gc-forest:  #1B4332;
+  --color-gc-jade:    #2D6A4F;
+  --color-gc-sage:    #74C69D;
+  --color-gc-mint:    #D8F3DC;
+  --color-gc-ivory:   #F8F5F0;
+  --color-gc-white:   #FFFFFF;
+  --color-gc-ink:     #1A1A2E;
+  --color-gc-muted:   #6B7280;
+  --color-gc-border:  #E5E7EB;
+  --color-gc-error:   #DC2626;
+  --color-gc-warning: #D97706;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Smooth focus rings — visible on keyboard, hidden on pointer */
+:focus-visible {
+  outline: 2px solid #2D6A4F;
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
