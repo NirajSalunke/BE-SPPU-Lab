@@ -190,7 +190,7 @@ int main()
         }
         else if (choice == 2)
         {
-            ifstream file("input.txt");
+            ifstream file("input_1.txt");
 
             if (!file.is_open())
             {
